@@ -1,6 +1,7 @@
 import React from 'react';
+import auth from '../hoc/auth';
 
-export default props => {
+const MovieQuote = props => {
     return(
         <div>
             <h1 className="text-center">
@@ -12,3 +13,5 @@ export default props => {
         </div>
     )
 }
+
+export default auth(MovieQuote);
