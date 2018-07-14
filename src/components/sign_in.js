@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import {createAccount} from '../actions';
-import {renderInputs} from '../helpers';
+import { actionSignIn } from '../actions';
+import { renderInputs } from '../helpers';
 
-class SignUp extends Component {
+class SignIn extends Component {
     
-    handleSignUp(values){
+    handleSignIn(values){
         console.log('Form Values:', values);
 
-        this.props.createAccount(values);
+        this.props.actionSignIn(values);
     }
 
     render(){
         const {handleSubmit} = this.props;
 
         return(
-            <form onSubmit={handleSubmit(this.handleSignUp.bind(this))}>
-                <h1 className="text-center">Create Account</h1>
+            <form onSubmit={handleSubmit(this.handleSignIn.bind(this))}>
+                <h1 className="text-center">Sign In</h1>
                 <div className="row">
                     <Field className="col-6 offset-3" name="email" component={renderInputs} label="Email"/>
                 </div>
@@ -25,11 +25,8 @@ class SignUp extends Component {
                     <Field className="col-6 offset-3" name="password" type="password" component={renderInputs} label="Password"/>
                 </div>
                 <div className="row">
-                    <Field className="col-6 offset-3" name="confirmPassword" type="password" component={renderInputs} label="Confirm Password"/>
-                </div>
-                <div className="row">
                     <div className="d-flex col-6 offset-3 justify-content-end">
-                        <button className="btn btn-outline-success">Sign Up</button>
+                        <button className="btn btn-outline-success">Sign In</button>
                     </div>
                 </div>
             </form>
@@ -38,7 +35,7 @@ class SignUp extends Component {
 }
 
 function validate(values){
-    const {email, password, confirmPassword} = values;
+    const {email, password} = values;
     const errors = {};
 
     if(!email){
@@ -49,16 +46,12 @@ function validate(values){
         errors.password = 'Please choose a password.';
     }
 
-    if(password !== confirmPassword){
-        errors.confirmPassword = 'Passwords do not match.';
-    }
-
     return errors;
 }
 
-SignUp = reduxForm({
-    form: 'sign-up',
+SignIn = reduxForm({
+    form: 'sign-in',
     validate: validate
-})(SignUp);
+})(SignIn);
 
-export default connect(null, {createAccount: createAccount})(SignUp);
+export default connect(null, {actionSignIn: actionSignIn})(SignIn);
